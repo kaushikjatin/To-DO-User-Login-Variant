@@ -3,12 +3,11 @@
     display: none;
 }
 
-#done_button
-{
-    display: none;
-}
-
-#todo 
-{
-    color: blue;
-}
+.fabutton {
+    background: none;
+    padding: 0px;
+    border: none;
+  }
+  
+  
+  

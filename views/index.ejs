@@ -1,25 +1,29 @@
 <% include partials/header %>
 
-
-<div class="container">
-    <h1>Add A TODO</h1>
+<div id="container">
+    <h1>TO-DO List</h1>
     <form action="/<%=user._id%>/todos/new" method="POST">
         <input type="text" placeholder="Add a new ToDo" name="todo">
     </form>
-    <%user.todos.forEach(function(todo)
-    {%>
-        <div>
-            <li><span><i class="fa fa-trash-alt"></i></span id="todo"><%=todo.todo%></li>
-            <h3 id="todo"><%=todo.todo%></h3>
-            <form action="/<%=user._id%>/todos/<%=todo._id%>/edit?_method=PUT" method="POST" id="edit_form">
-                <input type="text" value="<%=todo.todo%>" name="todo">
-                <button id="done_button">Done</button>
-            </form> 
-        </div>
-            <form action="/<%=user._id%>/todos/<%=todo._id%>/delete" method="POST" >
-                <button>Delete</button>
-            </form>
-    <%})%>
+    <ul>
+        <%user.todos.forEach(function(todo)
+        {%>
+            <div id="todo_container">
+                <form action="/<%=user._id%>/todos/<%=todo._id%>/delete" method="POST" >
+                    <button type="submit" class="fabutton">
+                        <i class="fa fa-trash-alt"></i>
+                    </button>
+                </form>
+                <div id="todo">
+                    <span><%=todo.todo%></span>
+                    <form action="/<%=user._id%>/todos/<%=todo._id%>/edit?_method=PUT" method="POST" id="edit_form">
+                        <input type="text" value="<%=todo.todo%>" name="todo">
+                        <button id="done_button">Done</button>
+                    </form> 
+                </div>
+            </div>
+        <%})%>
+    </ul>
 </div>
 
 <% include partials/footer %>
