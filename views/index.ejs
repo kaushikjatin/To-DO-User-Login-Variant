@@ -1,27 +1,36 @@
 <% include partials/header %>
 
-<div id="container">
-    <h1>TO-DO List</h1>
-    <form action="/<%=user._id%>/todos/new" method="POST">
-        <input type="text" placeholder="Add a new ToDo" name="todo">
-    </form>
+<div class="container">
+    <h1>TO-DO LIST</h1>
     <ul>
+        <li class="list-group-item">
+            <form action="/<%=user._id%>/todos/new" method="POST">
+                <input type="text" placeholder="Add a new ToDo" name="todo">
+            </form>
+        </li>
         <%user.todos.forEach(function(todo)
         {%>
-            <div id="todo_container">
-                <form action="/<%=user._id%>/todos/<%=todo._id%>/delete" method="POST" >
-                    <button type="submit" class="fabutton">
-                        <i class="fa fa-trash-alt"></i>
-                    </button>
-                </form>
-                <div id="todo">
-                    <span><%=todo.todo%></span>
-                    <form action="/<%=user._id%>/todos/<%=todo._id%>/edit?_method=PUT" method="POST" id="edit_form">
-                        <input type="text" value="<%=todo.todo%>" name="todo">
-                        <button id="done_button">Done</button>
-                    </form> 
-                </div>
-            </div>
+           <li class="list-group-item">
+            <div>
+                <!-- Delete Button -->
+               <span >
+                   <form action="/<%=user._id%>/todos/<%=todo._id%>/delete" method="POST" >
+                       <button type="submit" class="fabutton">
+                           <i class="fa fa-trash-alt"></i>
+                       </button>
+                   </form>
+               </span>
+               <!-- TODO And Edit Funtionality -->
+               <div id="todo">
+                   <span ><%=todo.todo%></span>
+                   <form action="/<%=user._id%>/todos/<%=todo._id%>/edit?_method=PUT" method="POST" id="edit_form" style="margin-bottom: 0px;">
+                       <input type="text" value="<%=todo.todo%>" name="todo" id="edit_input">
+                       <button id="done_button">OK</span></button>
+                   </form> 
+               </div>
+
+           </div>
+           </li>
         <%})%>
     </ul>
 </div>

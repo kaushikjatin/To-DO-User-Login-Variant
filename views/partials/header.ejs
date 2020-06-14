@@ -16,7 +16,7 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">TO-Do-Tracker</a>
+                <a class="navbar-brand" href="#">TO-Do-TRACKER</a>
               </div>
           
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -32,3 +32,18 @@
         </nav>
   
         </div>
+      
+        <div class="container">
+          <% if(error && error.length>0){%>
+            <div class="alert alert-danger" role="alert">
+              <%=error%>
+            </div>
+        <%}%>
+
+        <% if(success && success.length>0){%>
+          <div class="alert alert-success" role="alert">
+            <%=success%>
+          </div>
+       <%}%>
+
+      </div>

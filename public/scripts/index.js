@@ -13,4 +13,9 @@ window.onload=function()
             childnodes[1].style.display="none";
             childnodes[0].style.display="block";
         })
+
+        $('ul').on('click',"#edit_input",function()
+        {
+            $(this).autofocus="true";
+        })
 }   

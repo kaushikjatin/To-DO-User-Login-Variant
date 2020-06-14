@@ -10,4 +10,35 @@
   }
   
   
-  
+input 
+{
+    border: 0px; 
+    margin: 0px; 
+    padding: 0px;
+    width: 90%;
+    box-sizing: border-box;
+}
+
+input:focus 
+{
+	outline: none;
+}
+
+button
+{
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+    background: none;
+    outline: none;
+}
+
+#todo form button 
+{
+    float:right;
+}
+
+h1
+{
+    text-align: center;
+}

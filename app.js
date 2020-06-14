@@ -5,17 +5,19 @@ var mongoose=require("mongoose");
 var passport=require('passport');
 var methodOverride=require('method-override');
 var LocalStrategy=require('passport-local');
-
+var flash=require('connect-flash');
 
 var todos=require('./models/todo');
 var users=require('./models/user');
-mongoose.connect('mongodb://localhost/to_do');
+var MongoURI = "mongodb+srv://kaushikjatin:Password@cluster0-bsz6j.mongodb.net/<dbname>?retryWrites=true&w=majority";
+mongoose.connect(MongoURI, { useUnifiedTopology: true, useNewUrlParser: true });
 
 
 app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(methodOverride('_method'))
 app.use(express.static("public"));
+app.use(flash());
 app.use(require('express-session')
 ({
     secret:"This is a TODO app",
@@ -27,6 +29,8 @@ app.use(passport.session());
 app.use(function(req,res,next)
 {
     res.locals.user=req.user;
+    res.locals.error=req.flash("error");
+    res.locals.success=req.flash("success");
     next();
 });
 passport.use(new LocalStrategy(users.authenticate()));
@@ -41,6 +45,10 @@ app.get("/",function(req,res)
     res.render("landing_page");
 })
 
+app.get("/register",function(req,res)
+{
+  res.render("register");
+})
 
 app.get("/:id/todos",isLoggedin,function(req,res)
 {
@@ -75,6 +83,7 @@ app.post("/:id/todos/new",isLoggedin,function(req,res)
             user.todos.push(todo);
             user.save();
            }
+           req.flash("success","TO-DO Successfully Added");
            res.redirect("/"+req.params.id+"/todos");   
          }
        })
@@ -90,7 +99,11 @@ app.post("/:id/todos/:todoid/delete",isLoggedin,function(req,res)
         if(err)
           console.log(err);
         else 
+        {
+          req.flash("success","TO-DO Successfully Deleted")
           res.redirect("/"+req.params.id+"/todos");   
+        }
+          
     })
 })
 
@@ -101,7 +114,11 @@ app.put("/:id/todos/:todoid/edit",isLoggedin,function(req,res)
         if(err)
           console.log(err);
         else 
-          res.redirect("/"+req.params.id+"/todos");   
+        {
+          req.flash("success","TO-DO Successfully Updated")
+          res.redirect("/"+req.params.id+"/todos"); 
+        }
+            
     })
 })
 
@@ -134,12 +151,14 @@ app.post("/register",function(req,res)
     {
         if(err)
         {
+           req.flash("error",err.message);      
            res.redirect('/');
         }
         else 
         {
         passport.authenticate("local")(req,res,function()
         {
+            req.flash("success","Welcome To Your TO-DO-TRACKER");
             res.redirect("/"+req.user._id+'/todos');
         })
         }
